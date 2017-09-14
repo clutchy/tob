@@ -1,0 +1,21 @@
+.navbar-default {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.navbar-default .navbar-brand {
+    color: #000000;
+}
+
+.navbar-default .navbar-collapse .navbar-item {
+    color: #000000;
+}
+
+.navbar-brand {
+    padding-top: 6px;
+}
+
+.navbar-brand>img {
+    height: 127%;
+    width: auto;
+}

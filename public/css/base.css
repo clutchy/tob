@@ -1,0 +1,14 @@
+body {
+    max-width: 960px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}

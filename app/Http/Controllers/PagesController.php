@@ -19,9 +19,36 @@ class PagesController extends Controller
 
     public function postBlagajnaForm(Request $request)
     {
-        /*$this->validate($request, ["email" => "required|email"]);
+        $this->validate($request, [
+            "name" => "required|max:255",
+            "surname" => "required|max:255",
+            "address" => "required",
+            "post_number" => "required|numeric",
+            "post" => "required",
+            "phone" => "required|numeric",
+            "email" => "required|email"
+        ]);
+
+        $name = $request->input('name');
+        $surname = $request->input('surname');
+        $address = $request->input('address');
+        $post_number = $request->input('post_number');
+        $post = $request->input('post');
+        $phone = $request->input('phone');
         $email = $request->input('email');
-        $extra_text = $request->input('extra-text');*/
+        $extra_text = $request->input('extra-text');
+
+        $total = floatval(0);
+
+        if ($request->input('gridRadios') == 'pay_on_delivery')
+        {
+            $total += 2.5;
+        }
+        else if ($request->input('gridRadios') != 'pay_before_delivery')
+        {
+            return $this->getBlagajna();
+        }
+
         $url = 'https://www.google.com/recaptcha/api/siteverify';
         $ids = json_decode($request->input('ids'));
         $token = $request->input('g-recaptcha-response');
@@ -37,7 +64,7 @@ class PagesController extends Controller
         );
         $context  = stream_context_create($options);
         $result = file_get_contents($url, false, $context);
-        if ($result === FALSE)
+        if (!$result)
         {
             return "Error";
         }
@@ -49,27 +76,36 @@ class PagesController extends Controller
 
         $tbags = array();
 
-        foreach($ids as $key => $value) {
+        foreach($ids as $key => $count) {
             $tbag = Tbag::all()->where('tbag_id', '=', $key)->first();
             if ($tbag)
             {
-                $tbags[$tbag->tbag_id] = array($tbag, $value);
+                $tbags[$tbag->tbag_id] = array($tbag, $count);
+                $total += $tbag->tbag_price * $count;
             }
         }
 
         $data = array(
-            "email" => "lala@gmail.com",
-            "extra_text" => "lalsaas",
+            "name" => $name,
+            "surname" => $surname,
+            "address" => $address,
+            "post_number" => $post_number,
+            "post" => $post,
+            "phone" => $phone,
+            "email" => $email,
+            "extra_text" => $extra_text,
+            "total" => $total,
             "tbags" => $tbags
         );
 
         Mail::send("emails.contact", $data, function ($message) use ($data) {
             $message->from($data["email"]);
             $message->to("25d73db3d6-2738f2@inbox.mailtrap.io");
-            $message->subject("lallala");
+            $message->subject("TOB naročilo");
         });
 
-        return "sended";
+        $tbags = Tbag::all();
+        return redirect(url('/'))->with('tbags', $tbags);
     }
 
     public function getKosarica() {

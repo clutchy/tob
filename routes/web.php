@@ -20,7 +20,3 @@ Route::get('/podrobnosti', ['as' => '/podrobnosti', 'uses' =>'PagesController@ge
 Route::get('/kosarica', ['as' => '/kosarica', 'uses' =>'PagesController@getKosarica']);
 
 Route::post('/blagajna-form', 'PagesController@postBlagajnaForm');
-
-Route::post('/vkosarico', 'PagesController@postVKosarico');
-
-Route::post('/tbagbyid', 'PagesController@postTbagById');

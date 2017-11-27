@@ -5,10 +5,9 @@
 var tr =    "<tr id=\"kosarica-item${tbag_id}\">\
             <td data-th=\"Izdelek\">\
             <div class=\"row\">\
-            <div class=\"col-sm-4 hidden-xs\"><img src=\"http://placehold.it/300x150\" alt=\"...\" class=\"img-responsive\"/></div>\
+            <div class=\"col-sm-4 hidden-xs\"><img id=\"kosarica-img${tbag_id}\" src=\"http://localhost/tobak_torbica_tob_tobacnica_comic/tobak_torbica_tob_tobacnica_comic1.jpg\" alt=\"http://placehold.it/300x150\" class=\"img-responsive\"/></div>\
             <div class=\"col-sm-8\">\
             <h4 class=\"nomargin\">${tbag_name}</h4>\
-            <p>${description}</p>\
             </div>\
             </div>\
             </td>\
@@ -34,12 +33,17 @@ window.onload = function ()
         var item = localStorage.getItem(key);
         var tbag = JSON.parse(item);
 
-        if (key === "kosaricaCount")
+
+        if (key === "kosaricaCount" || tbag.tbag_id === undefined)
         {
             continue;
         }
 
         $.tmpl(tr , tbag).appendTo( "#cart-items" );
+
+        var kosarica_img = $( "#kosarica-img".concat(tbag.tbag_id) );
+
+        kosarica_img.attr('src', window.location.origin.concat('/'.concat('tob_slike'.concat('/'.concat(tbag.img_name.concat('/'.concat(tbag.img_name.concat('1.jpg'))))))));
     }
 
     calculate_price_all();

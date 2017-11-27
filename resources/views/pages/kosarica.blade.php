@@ -21,11 +21,12 @@
         <tbody id="cart-items">
         </tbody>
         <tfoot>
+        <tfoot>
         <tr class="visible-xs">
             <td class="text-center skupaj-class"><strong></strong></td>
         </tr>
         <tr>
-            <td><a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Nadaljuj z nakupovanjem</a></td>
+            <td class="pull-left"><a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Nadaljuj z nakupovanjem</a></td>
             <td colspan="2" class="hidden-xs"></td>
             <td class="hidden-xs text-center skupaj-class"><strong></strong></td>
             <td><a href="{{ url('/blagajna') }}" class="btn btn-success btn-block">Na blagajno <i class="fa fa-angle-right"></i></a></td>

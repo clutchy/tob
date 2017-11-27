@@ -28,7 +28,7 @@ $( "#blagajna-form" ).submit(function (event)
         var item = localStorage.getItem(key);
         var tbag = JSON.parse(item);
 
-        if (key === "kosaricaCount")
+        if (key === "kosaricaCount" || tbag.tbag_id === undefined)
         {
             continue;
         }
@@ -51,8 +51,15 @@ window.onload = function ()
 
 function set_table_values(no_shipping, shipping) {
     $( '#total_no_shipping' ).text(String(no_shipping.toFixed(2)).concat('€'));
-    $( '#shipping' ).text(String(shipping.toFixed(2)).concat('€'));
-    $( '#total' ).text(String((no_shipping + shipping).toFixed(2)).concat('€'));
+
+    if (no_shipping != 0) {
+        $('#shipping').text(String(shipping.toFixed(2)).concat('€'));
+        $('#total').text(String((no_shipping + shipping).toFixed(2)).concat('€'));
+    }
+    else {
+        $('#shipping').text(String(no_shipping.toFixed(2)).concat('€'));
+        $('#total').text(String(no_shipping.toFixed(2)).concat('€'));
+    }
 }
 
 function shipping_click()
@@ -79,7 +86,8 @@ function calculate_total_no_shipping()
         var item = localStorage.getItem(key);
         var tbag = JSON.parse(item);
 
-        if (key === "kosaricaCount")
+        if (key === "kosaricaCount" ||
+            tbag.tbag_id === undefined)
         {
             continue;
         }

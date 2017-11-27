@@ -8,13 +8,13 @@
             </ol>
             <div class="carousel-inner">
                 <div class="item active">
-                    <img class="slide-image" src="{{ asset('images/header.jpg') }}" alt="">
+                    <img class="slide-image" src="{{ asset('tob_slike/naslovna1.jpg') }}" alt="">
                 </div>
                 <div class="item">
-                    <img class="slide-image" src="{{ asset('images/mucadf.jpg') }}" alt="">
+                    <img class="slide-image" src="{{ asset('tob_slike/header1.jpg') }}" alt="">
                 </div>
                 <div class="item">
-                    <img class="slide-image" src="{{ asset('images/casopis11.jpg') }}" alt="">
+                    <img class="slide-image" src="{{ asset('tob_slike/sah1.jpg') }}" alt="">
                 </div>
             </div>
             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">

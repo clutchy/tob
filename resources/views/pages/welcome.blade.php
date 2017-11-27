@@ -5,6 +5,7 @@
 
 @section('head')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/welcome.css') }}">
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
 @endsection
 
 @section('content')
@@ -18,13 +19,14 @@
                 <div class="col-sm-4 col-lg-4 col-md-4">
                     <div class="thumbnail">
                         <!-- TODO: Change to image name -->
-                        <form method="GET" action="{{ url('podrobnosti') }}">
-                            <input class="img-form" type="image" name="tbag_id" value="{{ $tbag->tbag_id }}" src="http://placehold.it/320x150" alt="" />
+                        <form class="podrobnosti-form" method="GET" action="{{ url('podrobnosti') }}">
+                            <input class="img-form" type="image" name="tbag_img" src="{{ asset('tob_slike/' . $tbag->img_name . '/' . $tbag->img_name) }}.jpg" alt="" />
+                            <input class="hidden" type="text" name="tbag_id" value="{{ $tbag->tbag_id }}"/>
                         </form>
                         <div class="caption">
                             <h4 class="pull-right">{{ $tbag->tbag_price }} €</h4>
                             <h4 class="tbag_name"><a href="#">{{ $tbag->tbag_name }}</a></h4>
-                            <p class="item-description">{{ $tbag->description }} dsdasfjdsa jksdlafj lsdk jsdk dsjsf sl</p>
+                            <p class="item-description">{{ str_limit($tbag->description, 200) }}</p>
                             <div class="ratings">
                                 <td>
                                     <tr>

@@ -12,10 +12,10 @@
 }
 
 .navbar-brand {
-    padding-top: 6px;
+    vertical-align: middle;
 }
 
-.navbar-brand>img {
+/*.navbar-brand>img {
     height: 127%;
     width: auto;
-}
+}*/

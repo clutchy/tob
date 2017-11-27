@@ -14,9 +14,11 @@ class CreateTbagsTable extends Migration
     public function up()
     {
         Schema::create('tbags', function (Blueprint $table) {
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
             $table->increments('tbag_id');
             $table->string('tbag_name', 100);
-            $table->string('description', 250);
+            $table->string('description', 1024);
             $table->string('img_name', 255);
             $table->decimal('tbag_price', 5, 2);
             $table->double('open_width', 15, 8);

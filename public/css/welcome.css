@@ -26,6 +26,15 @@
 }
 
 .img-form {
+    max-height: 130px;
+}
+
+.item-description {
+    height: 9em;
+    line-height: 1.4em;
+}
+
+.img-form {
     width: 100%;
 }
 

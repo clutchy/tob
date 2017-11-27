@@ -66,12 +66,12 @@ class PagesController extends Controller
         $result = file_get_contents($url, false, $context);
         if (!$result)
         {
-            return "Error";
+            return "Pošiljanje obrazca neuspešno";
         }
 
         $result = json_decode($result);
         if (!$result->success) {
-            return "Fail";
+            return "Pošiljanje obrazca neuspešno";
         }
 
         $tbags = array();
@@ -99,8 +99,8 @@ class PagesController extends Controller
         );
 
         Mail::send("emails.contact", $data, function ($message) use ($data) {
-            $message->from($data["email"]);
-            $message->to("25d73db3d6-2738f2@inbox.mailtrap.io");
+            $message->from("25d73db3d6-2738f2@inbox.mailtrap.io");
+            $message->to($data["email"]);
             $message->subject("TOB naročilo");
         });
 

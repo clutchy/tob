@@ -123,7 +123,9 @@ function thrash_click(id_num)
         return;
     }
 
-    localStorage.kosaricaCount = localStorage.kosaricaCount - 1;
+
+    localStorage.kosaricaCount = parseInt(localStorage.kosaricaCount) - 1;
+    set_button_kosarica(localStorage.kosaricaCount);
     localStorage.removeItem(String(id));
 
     calculate_price_all();

@@ -8,9 +8,12 @@ use Mail;
 
 class PagesController extends Controller
 {
-    public function getIndex() {
+    public function getIndex(Request $request) {
+        $empty = $request->input('empty');
+
         $tbags = Tbag::all();
-        return view('pages.welcome')->with('tbags', $tbags);
+
+        return view('pages.welcome', ['tbags' => $tbags, 'empty' => $empty]);
     }
 
     public function getBlagajna() {
@@ -21,16 +24,14 @@ class PagesController extends Controller
     {
         $this->validate($request, [
             "name" => "required|max:255",
-            "surname" => "required|max:255",
             "address" => "required",
-            "post_number" => "required|numeric",
+            "post_number" => "required",
             "post" => "required",
-            "phone" => "required|numeric",
+            "phone" => "required",
             "email" => "required|email"
         ]);
 
         $name = $request->input('name');
-        $surname = $request->input('surname');
         $address = $request->input('address');
         $post_number = $request->input('post_number');
         $post = $request->input('post');
@@ -46,7 +47,7 @@ class PagesController extends Controller
         }
         else if ($request->input('gridRadios') != 'pay_before_delivery')
         {
-            return $this->getBlagajna();
+            return redirect()->action('PagesController@getBlagajna');
         }
 
         $url = 'https://www.google.com/recaptcha/api/siteverify';
@@ -76,6 +77,11 @@ class PagesController extends Controller
 
         $tbags = array();
 
+        if ($ids == null)
+        {
+            return "V košarici ni nobene torbice";
+        }
+
         foreach($ids as $key => $count) {
             $tbag = Tbag::all()->where('tbag_id', '=', $key)->first();
             if ($tbag)
@@ -87,7 +93,6 @@ class PagesController extends Controller
 
         $data = array(
             "name" => $name,
-            "surname" => $surname,
             "address" => $address,
             "post_number" => $post_number,
             "post" => $post,
@@ -104,8 +109,8 @@ class PagesController extends Controller
             $message->subject("TOB naročilo");
         });
 
-        $tbags = Tbag::all();
-        return redirect(url('/'))->with('tbags', $tbags);
+        $empty = true;
+        return redirect()->action('PagesController@getIndex', ['empty' => $empty]);
     }
 
     public function getKosarica() {

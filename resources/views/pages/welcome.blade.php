@@ -10,10 +10,17 @@
 
 @section('content')
 
+@isset($empty)
+    <script>
+        window.onload = function () {
+            empty_basket();
+        };
+    </script>
+@endisset
+
 <div class="row">
     <div class="col-md-12">
         @include('includes.carousel')
-
         <div class="row">
             @foreach ($tbags as $tbag)
                 <div class="col-sm-4 col-lg-4 col-md-4">

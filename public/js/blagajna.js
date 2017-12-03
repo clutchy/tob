@@ -5,7 +5,7 @@
 var no_shipping = calculate_total_no_shipping();
 var shipping = 2.5;
 
-$( "#blagajna-form" ).submit(function (event)
+$( "#validator-form" ).submit(function (event)
 {
     var response = grecaptcha.getResponse();
     if (response.length === 0)
@@ -37,11 +37,7 @@ $( "#blagajna-form" ).submit(function (event)
     }
 
     var idsJSON = JSON.stringify(ids);
-
-    $('<input />').attr('type', 'hidden')
-        .attr('name', 'ids')
-        .attr('value', idsJSON)
-        .appendTo('#blagajna-form');
+    $( '#ids-blagajna' ).val(idsJSON);
 });
 
 window.onload = function ()

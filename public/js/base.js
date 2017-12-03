@@ -11,7 +11,12 @@ if (localStorage_is_supported())
         localStorage["kosaricaCount"] = 0;
     }
 
-    buttonKosarica.attr('value', 'Kosarica('.concat(localStorage["kosaricaCount"]).concat(')'));
+    set_button_kosarica(localStorage["kosaricaCount"]);
+}
+
+function set_button_kosarica(num)
+{
+    buttonKosarica.attr('value', 'Kosarica('.concat(num).concat(')'));
 }
 
 function localStorage_is_supported() {
@@ -26,6 +31,9 @@ function localStorage_is_supported() {
     }
 }
 
+/*
+ * Adds or removes a single tbag
+ */
 function add_tbag(tbagJSON, count)
 {
     var tbag = JSON.parse(tbagJSON);
@@ -34,13 +42,22 @@ function add_tbag(tbagJSON, count)
 
     if (localStorage_is_supported()) {
         var bag = localStorage.getItem(String(tbag.tbag_id));
+        var inc;
+
+        if (parseInt(count) >= 0)
+        {
+            inc = 1;
+        }
+        else
+        {
+            inc = -1;
+        }
 
         if (!bag) {
-            localStorage["kosaricaCount"] = parseInt(localStorage["kosaricaCount"]) + 1;
+            localStorage["kosaricaCount"] = parseInt(localStorage["kosaricaCount"]) + parseInt(inc);
             localStorage.setItem(String(tbag.tbag_id), JSON.stringify(tbag));
 
-            buttonKosarica.attr('value', '');
-            buttonKosarica.attr('value', 'Kosarica('.concat(localStorage.kosaricaCount).concat(')'));
+            set_button_kosarica(localStorage.kosaricaCount);
 
             return true;
         }
@@ -62,4 +79,17 @@ function kosarica_click(tbagJSON, count) {
     else {
         alert('Izdelek je že v košarici');
     }
+}
+
+function empty_basket() {
+    if (!localStorage_is_supported()) {
+        return;
+    }
+
+    localStorage.clear();
+    localStorage["kosaricaCount"] = 0;
+
+    set_button_kosarica(localStorage.kosaricaCount);
+
+    alert("Hvala za naročilo. Vaš TOB:)")
 }

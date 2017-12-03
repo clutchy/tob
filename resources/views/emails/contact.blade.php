@@ -1,9 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/kosarica.css') }}">
 
-<h5>Ime:</h5>
+<h5>Ime in priimek:</h5>
 <p>{{ $name }}</p>
-<h5>Priimek:</h5>
-<p>{{ $surname }}</p>
 <h5>Ulica in hišna številka:</h5>
 <p>{{ $address }}</p>
 <h5>Poštna številka:</h5>

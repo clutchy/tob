@@ -15,7 +15,12 @@
     vertical-align: middle;
 }
 
-/*.navbar-brand>img {
-    height: 127%;
-    width: auto;
-}*/
+/* Fixed because of bootstrap */
+.navbar-right {
+    margin-right: 0;
+}
+
+.navbar-form {
+    margin: 0;
+    padding: 0;
+}

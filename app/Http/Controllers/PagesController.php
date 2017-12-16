@@ -16,8 +16,57 @@ class PagesController extends Controller
         return view('pages.welcome', ['tbags' => $tbags, 'empty' => $empty]);
     }
 
+    public function getONas() {
+        return view("pages.o-nas");
+    }
+
     public function getBlagajna() {
         return view('pages.blagajna');
+    }
+
+    public function getKontakt()
+    {
+        return view('pages.kontakt');
+    }
+
+    public function postKontaktForm(Request $request)
+    {
+        $this->validate($request, [
+            "name" => "required|max:255",
+            "email" => "required|email",
+            "extra-text" => "required"
+        ]);
+
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $extra_text = $request->input('extra-text');
+
+        $token = $request->input('g-recaptcha-response');
+
+        if (!$this->validateGRecaptcha($token))
+        {
+            return "Pošiljanje obrazca neuspešno";
+        }
+
+        $data = array(
+            "name" => $name,
+            "email" => $email,
+            "extra_text" => $extra_text,
+        );
+
+        Mail::send("emails.contact-confirm", $data, function ($message) use ($data) {
+            $message->from("info@tob.si");
+            $message->to($data["email"]);
+            $message->subject("TOB sporočilo");
+        });
+
+        Mail::send("emails.contact", $data, function ($message) use ($data) {
+            $message->from("info@tob.si");
+            $message->to("info@tob.si");
+            $message->subject("TOB sporočilo");
+        });
+
+        return redirect()->action('PagesController@getIndex');
     }
 
     public function postBlagajnaForm(Request $request)
@@ -50,28 +99,11 @@ class PagesController extends Controller
             return redirect()->action('PagesController@getBlagajna');
         }
 
-        $url = 'https://www.google.com/recaptcha/api/siteverify';
         $ids = json_decode($request->input('ids'));
         $token = $request->input('g-recaptcha-response');
 
-        $data = array('secret' => env('RECAPTCHA_SECRET'), 'response' => $token);
-
-        $options = array(
-            'http' => array(
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
-                'content' => http_build_query($data)
-            )
-        );
-        $context  = stream_context_create($options);
-        $result = file_get_contents($url, false, $context);
-        if (!$result)
+        if (!$this->validateGRecaptcha($token))
         {
-            return "Pošiljanje obrazca neuspešno";
-        }
-
-        $result = json_decode($result);
-        if (!$result->success) {
             return "Pošiljanje obrazca neuspešno";
         }
 
@@ -103,9 +135,15 @@ class PagesController extends Controller
             "tbags" => $tbags
         );
 
-        Mail::send("emails.contact", $data, function ($message) use ($data) {
-            $message->from("25d73db3d6-2738f2@inbox.mailtrap.io");
+        Mail::send("emails.order", $data, function ($message) use ($data) {
+            $message->from("info@tob.si");
             $message->to($data["email"]);
+            $message->subject("TOB naročilo");
+        });
+
+        Mail::send("emails.order", $data, function ($message) use ($data) {
+            $message->from("info@tob.si");
+            $message->to("info@tob.si");
             $message->subject("TOB naročilo");
         });
 
@@ -123,5 +161,32 @@ class PagesController extends Controller
         $tbag = Tbag::all()->where('tbag_id', '=', $id)->first();
 
         return view('pages.podrobnosti')->with('tbag', $tbag);
+    }
+
+    private function validateGRecaptcha($token) {
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+
+        $data = array('secret' => env('RECAPTCHA_SECRET'), 'response' => $token);
+
+        $options = array(
+            'http' => array(
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+        $context  = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        if (!$result)
+        {
+            return false;
+        }
+
+        $result = json_decode($result);
+        if (!$result->success) {
+            return false;
+        }
+
+        return true;
     }
 }

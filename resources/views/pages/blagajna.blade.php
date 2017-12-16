@@ -48,7 +48,7 @@
         </div>
         <div class="form-group">
             <label for="extra-text" class="control-label">Dodatno sporočilo*</label>
-            <input type="text" name="extra-text" class="form-control" id="inputName">
+            <textarea rows="3" name="extra-text" class="form-control" id="inputName"></textarea>
         </div>
         <div class="form-group">
             <div class="radio">
@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row recaptcha">
             <div class="g-recaptcha" data-sitekey="6Lc2Fy4UAAAAAC3xfk_6pyRCVXH12xUnU8WilKW4"></div>
         </div>
 

@@ -93,3 +93,8 @@ function empty_basket() {
 
     alert("Hvala za naročilo. Vaš TOB:)")
 }
+
+$(document).ready(function() {
+    var pathname = window.location;
+    $('.nav > li > a[href="'+pathname+'"]').parent().addClass('active');
+});

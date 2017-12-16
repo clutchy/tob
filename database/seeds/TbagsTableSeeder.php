@@ -46,7 +46,7 @@ class TbagsTableSeeder extends Seeder
         ]);
 
         DB::table('tbags')->insert([
-            'tbag_name' => 'USNJE USNJE SIVA',
+            'tbag_name' => 'USNJE SIVA',
             'description' => 'Torbica je izdelana iz kvalitetnega umetnjega usnja. Služi shranjevanju 30g tobaka v vrečki, papirčkov in filtrov. Mali žepek se prilega papirčkom in omogoča enostavno jemanje posamičnega pairčka. Torbica se zapre z dvojnim pripogibom in na koncu še z ježkom, ki omogoča prilagajanje debeline glede na vsebino. Izdelek je izdelan v Sloveniji.',
             'img_name' => 'tobak_torbica_tob_tobacnica_usnje_siva',
             'tbag_price' => 15.50,

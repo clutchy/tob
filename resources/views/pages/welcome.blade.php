@@ -3,6 +3,10 @@
 @section('title')
 @endsection
 
+@section('active-class')
+    active
+@endsection
+
 @section('head')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/welcome.css') }}">
     <link rel="icon" href="{{ asset('favicon.ico') }}">
@@ -32,7 +36,7 @@
                         </form>
                         <div class="caption">
                             <h4 class="pull-right">{{ $tbag->tbag_price }} €</h4>
-                            <h4 class="tbag_name"><a href="#">{{ $tbag->tbag_name }}</a></h4>
+                            <h4 class="tbag_name"><a href="{{ url('podrobnosti') }}?tbag_id={{ $tbag->tbag_id }}">{{ $tbag->tbag_name }}</a></h4>
                             <p class="item-description">{{ str_limit($tbag->description, 200) }}</p>
                             <div class="ratings">
                                 <td>
@@ -53,7 +57,6 @@
                 </div>
             @endforeach
         </div>
-
     </div>
 
 </div>
@@ -61,5 +64,4 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/welcome.js') }}"></script>
 @endsection

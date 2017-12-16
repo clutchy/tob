@@ -12,3 +12,7 @@ body {
     width: 100%;
     text-align: center;
 }
+
+.recaptcha {
+    margin-left: 1px;
+}

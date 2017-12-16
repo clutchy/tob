@@ -15,8 +15,14 @@ Route::get('/', 'PagesController@getIndex');
 
 Route::get('/blagajna', 'PagesController@getBlagajna');
 
+Route::get('/o-nas', 'PagesController@getONas');
+
+Route::get('/kontakt', 'PagesController@getKontakt');
+
 Route::get('/podrobnosti', ['as' => '/podrobnosti', 'uses' =>'PagesController@getPodrobnosti']);
 
 Route::get('/kosarica', ['as' => '/kosarica', 'uses' =>'PagesController@getKosarica']);
+
+Route::post('/kontakt-form', 'PagesController@postKontaktForm');
 
 Route::post('/blagajna-form', 'PagesController@postBlagajnaForm');
